@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="com.llamas.vitia.IniciarSesion">
+
+    <LinearLayout
+        android:layout_width="290dp"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:background="@drawable/carta_blanca"
+        android:padding="24dp"
+        android:orientation="vertical"
+        android:elevation="6dp">
+
+        <com.llamas.vitia.CustomClasses.BoldTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inicia Sesión"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="6dp"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="130dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"/>
+
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo"/>
+
+        <com.llamas.vitia.CustomClasses.MediumTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:lineSpacingExtra="4dp"
+            android:text="¡Comienza hoy mismo! Desarrolla tu lenguaje de manera divertida y didáctica"/>
+
+        <com.llamas.vitia.CustomClasses.MediumTextView
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:background="@drawable/carta_redonda_azul_facebook"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/blanco"
+            android:text="Continua con Facebook"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

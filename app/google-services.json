@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "999490268355",
+    "firebase_url": "https://vitia-65ac6.firebaseio.com",
+    "project_id": "vitia-65ac6",
+    "storage_bucket": "vitia-65ac6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999490268355:android:b295c54e5c29e237",
+        "android_client_info": {
+          "package_name": "com.llamas.vitia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999490268355-6epckn7hn95up56gppcnlsba2t3l2hn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWc5AtpHlrPt8BqzAt0Orp9in3LQ-Xu0Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
