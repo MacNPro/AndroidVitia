@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.llamas.vitia.CustomClasses.BoldTextView;
 import com.llamas.vitia.DueloActivity;
 import com.llamas.vitia.Model.Contrincante;
+import com.llamas.vitia.Model.Duelo;
 import com.llamas.vitia.R;
 
 import java.util.List;
@@ -21,9 +22,9 @@ import java.util.List;
 import static com.llamas.vitia.Constantes.fondosDuelos;
 import static com.llamas.vitia.Constantes.fondosRedondos;
 
-public class ContrincantesAdapter extends RecyclerView.Adapter<ContrincantesAdapter.ViewHolder> {
+public class DuelosAdapter extends RecyclerView.Adapter<DuelosAdapter.ViewHolder> {
 
-    private List<Contrincante> contrincantes;
+    private List<Duelo> duelos;
     private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,13 +43,13 @@ public class ContrincantesAdapter extends RecyclerView.Adapter<ContrincantesAdap
 
     }
 
-    public ContrincantesAdapter(Context context, List<Contrincante> contrincantes) {
-        this.contrincantes = contrincantes;
+    public DuelosAdapter(Context context, List<Duelo> duelos) {
+        this.duelos = duelos;
         this.context = context;
     }
 
     @Override
-    public ContrincantesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public DuelosAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.elemento_contrincante, parent, false);
         return new ViewHolder(v);
     }
@@ -56,21 +57,12 @@ public class ContrincantesAdapter extends RecyclerView.Adapter<ContrincantesAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        final Contrincante c = contrincantes.get(position);
-
-        holder.imagen.setBackgroundResource(fondosRedondos[c.getColor()]);
-        holder.fondoDuelo.setBackgroundResource(fondosDuelos[c.getColor()]);
-
-        holder.nombre.setText(c.getNombre());
-        holder.nivel.setText("Nivel " + c.getNivel());
+        final Duelo d = duelos.get(position);
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, DueloActivity.class);
-                i.putExtra("Type", "nuevo");
-                i.putExtra("ID", c.getId());
-                context.startActivity(i);
+
             }
         });
 
@@ -78,7 +70,7 @@ public class ContrincantesAdapter extends RecyclerView.Adapter<ContrincantesAdap
 
     @Override
     public int getItemCount() {
-        return contrincantes.size();
+        return duelos.size();
     }
 }
 

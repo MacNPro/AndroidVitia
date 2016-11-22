@@ -1,23 +1,27 @@
 package com.llamas.vitia.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by MacNPro on 11/8/16.
  */
 
-public class Contrincante {
+public class Contrincante implements Serializable{
 
     String id;
     String nombre;
     int nivel;
+    int color;
 
     public Contrincante() {
 
     }
 
-    public Contrincante(String id, String nombre, int nivel) {
+    public Contrincante(String id, String nombre, int nivel, int color) {
         this.id = id;
         this.nombre = nombre;
         this.nivel = nivel;
+        this.color = color;
     }
 
     public String getId() {
@@ -42,5 +46,13 @@ public class Contrincante {
 
     public void setNivel(int nivel) {
         this.nivel = nivel;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

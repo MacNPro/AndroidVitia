@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.llamas.vitia.Constantes.getBaseRef;
+
 public class Splash extends Activity {
 
     static boolean calledAlready = false;
@@ -31,8 +33,10 @@ public class Splash extends Activity {
         if (user != null) {
             siguienteActivity(Inicio.class);
         } else {
-            siguienteActivity(Inicio.class);
+            siguienteActivity(IniciarSesion.class);
         }
+
+        getBaseRef().keepSynced(true);
 
     }
 

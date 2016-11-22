@@ -47,6 +47,7 @@
             android:text="¡Comienza hoy mismo! Desarrolla tu lenguaje de manera divertida y didáctica"/>
 
         <com.llamas.vitia.CustomClasses.MediumTextView
+            android:id="@+id/iniciar"
             android:layout_width="220dp"
             android:layout_height="40dp"
             android:background="@drawable/carta_redonda_azul_facebook"
