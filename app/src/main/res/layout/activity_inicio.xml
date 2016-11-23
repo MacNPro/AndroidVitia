@@ -44,6 +44,7 @@
             </RelativeLayout>
 
             <com.llamas.vitia.CustomClasses.HeavyTextView
+                android:id="@+id/nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre Apellido"
@@ -69,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="2,350"
+                    android:text="0"
                     android:textColor="@color/blanco" />
 
                 <com.llamas.vitia.CustomClasses.MediumTextView
@@ -93,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="15"
+                    android:text="0"
                     android:textColor="@color/blanco" />
 
                 <com.llamas.vitia.CustomClasses.MediumTextView
@@ -117,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="35"
+                    android:text="0"
                     android:textColor="@color/blanco" />
 
                 <com.llamas.vitia.CustomClasses.MediumTextView

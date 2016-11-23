@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.llamas.vitia.Adapters.ContrincantesAdapter;
 import com.llamas.vitia.Adapters.DuelosAdapter;
-import com.llamas.vitia.Model.Contrincante;
 import com.llamas.vitia.Model.Duelo;
 import com.llamas.vitia.R;
 

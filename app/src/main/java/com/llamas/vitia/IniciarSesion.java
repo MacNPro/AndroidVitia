@@ -58,8 +58,6 @@ public class IniciarSesion extends Activity {
                 if (user != null) {
                     print("onAuthStateChanged:signed_in:" + user.getUid());
                     userDefaults();
-                    Intent i = new Intent(IniciarSesion.this, Inicio.class);
-                    startActivity(i);
                 } else {
                     print("onAuthStateChanged:signed_out");
                 }
@@ -190,6 +188,8 @@ public class IniciarSesion extends Activity {
                 if (!dataSnapshot.exists()){
                     userRef.child("profileURL").setValue(getUser().getPhotoUrl());
                 }
+                Intent i = new Intent(IniciarSesion.this, Inicio.class);
+                startActivity(i);
             }
 
             @Override

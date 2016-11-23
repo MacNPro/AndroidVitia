@@ -40,10 +40,10 @@
                 android:textSize="16sp" />
 
             <com.llamas.vitia.CustomClasses.BoldTextView
-                android:id="@+id/nivel"
+                android:id="@+id/round"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nivel"
+                android:text="Round"
                 android:textColor="@color/textoClaro"
                 android:textSize="14sp" />
 

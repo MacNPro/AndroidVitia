@@ -16,6 +16,8 @@ public class Duelo implements Serializable{
     private String id;
     private String player1;
     private String player2;
+    private String player1ID;
+    private String player2ID;
     private String player1Profile;
     private String player2Profile;
     private String turno;
@@ -27,7 +29,10 @@ public class Duelo implements Serializable{
 
     }
 
-    public Duelo(String id, String player1, String player2, String player1Profile, String player2Profile, String turno, int round, int player1Puntos, int player2Puntos) {
+    public Duelo(String id, String player1ID, String player2ID, String player1, String player2, String player1Profile, String player2Profile, String turno, int round, int player1Puntos, int player2Puntos) {
+        this.id = id;
+        this.player1ID = player1ID;
+        this.player2ID = player2ID;
         this.player1 = player1;
         this.player2 = player2;
         this.player1Profile = player1Profile;
@@ -36,22 +41,6 @@ public class Duelo implements Serializable{
         this.round = round;
         this.player1Puntos = player1Puntos;
         this.player2Puntos = player2Puntos;
-    }
-
-    public String getPlayer1Profile() {
-        return player1Profile;
-    }
-
-    public void setPlayer1Profile(String player1Profile) {
-        this.player1Profile = player1Profile;
-    }
-
-    public String getPlayer2Profile() {
-        return player2Profile;
-    }
-
-    public void setPlayer2Profile(String player2Profile) {
-        this.player2Profile = player2Profile;
     }
 
     public String getId() {
@@ -76,6 +65,38 @@ public class Duelo implements Serializable{
 
     public void setPlayer2(String player2) {
         this.player2 = player2;
+    }
+
+    public String getPlayer1ID() {
+        return player1ID;
+    }
+
+    public void setPlayer1ID(String player1ID) {
+        this.player1ID = player1ID;
+    }
+
+    public String getPlayer2ID() {
+        return player2ID;
+    }
+
+    public void setPlayer2ID(String player2ID) {
+        this.player2ID = player2ID;
+    }
+
+    public String getPlayer1Profile() {
+        return player1Profile;
+    }
+
+    public void setPlayer1Profile(String player1Profile) {
+        this.player1Profile = player1Profile;
+    }
+
+    public String getPlayer2Profile() {
+        return player2Profile;
+    }
+
+    public void setPlayer2Profile(String player2Profile) {
+        this.player2Profile = player2Profile;
     }
 
     public String getTurno() {
@@ -115,6 +136,8 @@ public class Duelo implements Serializable{
 
         HashMap<String, Object> dueloMap = new HashMap<>();
         dueloMap.put("id", id);
+        dueloMap.put("player1ID", player1ID);
+        dueloMap.put("player2ID", player2ID);
         dueloMap.put("player1", player1);
         dueloMap.put("player2", player2);
         dueloMap.put("player1Profile", player1Profile);

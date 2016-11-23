@@ -69,17 +69,21 @@ public class Inicio extends FragmentActivity {
 
     //OBTENER INFO DE USUARIO
     public void getUserInfo() {
-        getUserRef().addListenerForSingleValueEvent(new ValueEventListener() {
+
+        getUserRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                String nombre = dataSnapshot.child("nombre").getValue(String.class);
                 int nivel = dataSnapshot.child("nivel").getValue(Integer.class);
                 int puntos = dataSnapshot.child("puntos").getValue(Integer.class);
                 int numeroDeDuelos = dataSnapshot.child("numeroDeDuelos").getValue(Integer.class);
 
+                HeavyTextView nombrett = (HeavyTextView) findViewById(R.id.nombre);
                 HeavyTextView niveltt = (HeavyTextView) findViewById(R.id.nivel);
                 HeavyTextView puntostt = (HeavyTextView) findViewById(R.id.puntos);
                 HeavyTextView duelostt = (HeavyTextView) findViewById(R.id.numeroDeDuelos);
 
+                nombrett.setText(nombre);
                 niveltt.setText("" + nivel);
                 puntostt.setText("" + puntos);
                 duelostt.setText("" + numeroDeDuelos);
@@ -90,8 +94,8 @@ public class Inicio extends FragmentActivity {
 
                     Duelo d = duelo.getValue(Duelo.class);
 
-                    String p1 = duelo.child("player1").getValue(String.class);
-                    String p2 = duelo.child("player2").getValue(String.class);
+                    String p1 = duelo.child("player1ID").getValue(String.class);
+                    String p2 = duelo.child("player2ID").getValue(String.class);
 
                     if (!p1.equals(getUser().getUid())) {
                         ids.add(p1);

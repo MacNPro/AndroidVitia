@@ -54,17 +54,17 @@ public class Constantes {
     };
 
     // OBJETO FIREBASE DEL USUARIO
-    static FirebaseUser getUser(){
+    public static FirebaseUser getUser(){
         return FirebaseAuth.getInstance().getCurrentUser();
     }
 
     // REFERENCIA DE CONTENIDOS
-    static DatabaseReference getBaseRef(){
+    public static DatabaseReference getBaseRef(){
         return FirebaseDatabase.getInstance().getReference();
     }
 
     // REFERENCIA DE USUARIO
-    static DatabaseReference getUserRef(){
+    public static DatabaseReference getUserRef(){
         return FirebaseDatabase.getInstance().getReference().child("usuarios").child(getUser().getUid());
     }
 
