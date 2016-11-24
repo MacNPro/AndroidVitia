@@ -132,6 +132,19 @@ public class Duelo implements Serializable{
     }
 
     @Exclude
+    @Override
+    public String toString(){
+        return  "ID: " + id + "\n" +
+                "Player 1 ID: " + player1ID + "\n" +
+                "Player 2 ID: " + player2ID + "\n" +
+                "Player 1: " + player1 + "\n" +
+                "Player 2: " + player2 + "\n" +
+                "Round: " + round + "\n" +
+                "Turno: " + turno + "\n"
+                ;
+    }
+
+    @Exclude
     public Map<String, Object> toMap(){
 
         HashMap<String, Object> dueloMap = new HashMap<>();

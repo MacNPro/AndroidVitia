@@ -33,6 +33,8 @@ import static com.llamas.vitia.Constantes.getBaseRef;
 import static com.llamas.vitia.Constantes.getUser;
 import static com.llamas.vitia.Constantes.getUserRef;
 import static com.llamas.vitia.R.id.foreignPuntos;
+import static com.llamas.vitia.R.id.nivel;
+import static com.llamas.vitia.R.id.numeroDeDuelos;
 import static com.llamas.vitia.R.id.puntos;
 
 public class DueloActivity extends Activity {
@@ -162,21 +164,25 @@ public class DueloActivity extends Activity {
             // ACABO EL DUELO
 
             // ACTUALIZAR LOCAL PUNTOS
-            getUserRef().child("puntos").runTransaction(new Transaction.Handler() {
+            getUserRef().runTransaction(new Transaction.Handler() {
                 @Override
                 public Transaction.Result doTransaction(MutableData mutableData) {
 
-                    int puntos = mutableData.getValue(Integer.class);
+                    int puntos = mutableData.child("puntos").getValue(Integer.class);
                     puntos = puntos + getLocalPuntos(duelo);
 
+                    int numDeDuelos = mutableData.child("numeroDeDuelos").getValue(Integer.class);
+                    numDeDuelos++;
+
                     // Set value and report transaction success
-                    mutableData.setValue(puntos);
+                    mutableData.child("puntos").setValue(puntos);
+                    mutableData.child("numeroDeDuelos").setValue(numDeDuelos);
+                    mutableData.child("nivel").setValue(1+(puntos/2250));
                     return Transaction.success(mutableData);
                 }
 
                 @Override
                 public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                    // Transaction completed
                     Log.d(TAG, "postTransaction:onComplete:" + databaseError);
                 }
             });
@@ -186,57 +192,21 @@ public class DueloActivity extends Activity {
                 @Override
                 public Transaction.Result doTransaction(MutableData mutableData) {
 
-                    int puntos = mutableData.getValue(Integer.class);
-                    puntos = puntos + getLocalPuntos(duelo);
+                    int puntos = mutableData.child("puntos").getValue(Integer.class);
+                    puntos = puntos + getForeignPuntos(duelo);
 
-                    // Set value and report transaction success
-                    mutableData.setValue(puntos);
-                    return Transaction.success(mutableData);
-                }
-
-                @Override
-                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                    // Transaction completed
-                    Log.d(TAG, "postTransaction:onComplete:" + databaseError);
-                }
-            });
-
-            // ACTUALIZAR NUMERO DE DUELOS LOCAL
-            getUserRef().child("numeroDeDuelos").runTransaction(new Transaction.Handler() {
-                @Override
-                public Transaction.Result doTransaction(MutableData mutableData) {
-
-                    int numDeDuelos = mutableData.getValue(Integer.class);
+                    int numDeDuelos = mutableData.child("numeroDeDuelos").getValue(Integer.class);
                     numDeDuelos++;
 
                     // Set value and report transaction success
-                    mutableData.setValue(numDeDuelos);
+                    mutableData.child("puntos").setValue(puntos);
+                    mutableData.child("numeroDeDuelos").setValue(numDeDuelos);
+                    mutableData.child("nivel").setValue(1+(puntos/2250));
                     return Transaction.success(mutableData);
                 }
 
                 @Override
                 public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                    // Transaction completed
-                    Log.d(TAG, "postTransaction:onComplete:" + databaseError);
-                }
-            });
-
-            // ACTUALIZAR NUMERO DE DUELOS FOREIGN
-            getBaseRef().child("usuarios").child(getForeignID(duelo)).child("numeroDeDuelos").runTransaction(new Transaction.Handler() {
-                @Override
-                public Transaction.Result doTransaction(MutableData mutableData) {
-
-                    int numDeDuelos = mutableData.getValue(Integer.class);
-                    numDeDuelos++;
-
-                    // Set value and report transaction success
-                    mutableData.setValue(numDeDuelos);
-                    return Transaction.success(mutableData);
-                }
-
-                @Override
-                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
-                    // Transaction completed
                     Log.d(TAG, "postTransaction:onComplete:" + databaseError);
                     Map<String, Object> childUpdates = new HashMap<>();
                     childUpdates.put("/duelos/" + duelo.getId(), null);
@@ -247,11 +217,17 @@ public class DueloActivity extends Activity {
                 }
             });
 
-            finish();
-
         } else if (!eresPlayer1(duelo)) {
             // SE SUMA UN ROUND
             duelo.setRound(duelo.getRound() + 1);
+            Map<String, Object> dueloMap = duelo.toMap();
+
+            Map<String, Object> childUpdates = new HashMap<>();
+            childUpdates.put("/duelos/" + duelo.getId(), dueloMap);
+            childUpdates.put("/usuarios/" + duelo.getPlayer1ID() + "/duelos/" + duelo.getId(), dueloMap);
+            childUpdates.put("/usuarios/" + duelo.getPlayer2ID() + "/duelos/" + duelo.getId(), dueloMap);
+
+            getBaseRef().updateChildren(childUpdates);
         } else {
             // SE ACTUALIZA Y GUARDA EL DUELO
             Map<String, Object> dueloMap = duelo.toMap();
@@ -264,10 +240,12 @@ public class DueloActivity extends Activity {
             getBaseRef().updateChildren(childUpdates);
         }
 
+        finish();
+
     }
 
     private void getPreguntas() {
-        getBaseRef().child("preguntas").addValueEventListener(new ValueEventListener() {
+        getBaseRef().child("preguntas").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -300,7 +278,7 @@ public class DueloActivity extends Activity {
 
             Pregunta p = preguntas.get(preguntaRandom);
             historialPreguntas.add(p);
-            preguntatt.setText(p.getPregunta());
+            preguntatt.setText(p.getP());
             r1View.setText(p.getR1());
             r2View.setText(p.getR2());
 
@@ -384,9 +362,9 @@ public class DueloActivity extends Activity {
         String player2ID = d.getPlayer2ID();
 
         if (!player1ID.equals(getUser().getUid())) {
-            playerID = d.getPlayer1ID();
+            playerID = player1ID;
         } else if (!player2ID.equals(getUser().getUid())) {
-            playerID = d.getPlayer2ID();
+            playerID = player2ID;
         }
 
         return playerID;
@@ -398,10 +376,10 @@ public class DueloActivity extends Activity {
         String player1ID = d.getPlayer1ID();
         String player2ID = d.getPlayer2ID();
 
-        if (!player1ID.equals(getUser().getUid())) {
-            playerID = d.getPlayer1ID();
-        } else if (!player2ID.equals(getUser().getUid())) {
-            playerID = d.getPlayer2ID();
+        if (player1ID.equals(getUser().getUid())) {
+            playerID = player1ID;
+        } else if (player2ID.equals(getUser().getUid())) {
+            playerID = player2ID;
         }
 
         return playerID;

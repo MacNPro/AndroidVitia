@@ -51,6 +51,9 @@ public class Inicio extends FragmentActivity {
 
         getUserInfo();
 
+        InicioPagerAdapter adapter = new InicioPagerAdapter(getSupportFragmentManager());
+        createViewPager(adapter);
+
     }
 
     /**
@@ -88,61 +91,6 @@ public class Inicio extends FragmentActivity {
                 puntostt.setText("" + puntos);
                 duelostt.setText("" + numeroDeDuelos);
 
-                ArrayList<String> ids = new ArrayList<>();
-                ArrayList<Duelo> duelos = new ArrayList<>();
-                for (DataSnapshot duelo : dataSnapshot.child("duelos").getChildren()) {
-
-                    Duelo d = duelo.getValue(Duelo.class);
-
-                    String p1 = duelo.child("player1ID").getValue(String.class);
-                    String p2 = duelo.child("player2ID").getValue(String.class);
-
-                    if (!p1.equals(getUser().getUid())) {
-                        ids.add(p1);
-                    } else if (!p2.equals(getUser().getUid())) {
-                        ids.add(p2);
-                    }
-
-                    print(p1 + "\n" + p2);
-
-                    duelos.add(d);
-
-                }
-
-                getContrincantes(ids, duelos);
-                print(ids.toString());
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    // OBTENER CONTRINCANTES
-    public void getContrincantes(final ArrayList<String> ids, final ArrayList<Duelo> duelos) {
-        getBaseRef().child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String id = getUser().getUid();
-                ArrayList<Contrincante> contrincantes = new ArrayList<>();
-                for (DataSnapshot usuario : dataSnapshot.getChildren()) {
-
-                    if (!usuario.getKey().equals(id) && !ids.contains(usuario.getKey())) {
-                        contrincantes.add(new Contrincante(
-                                usuario.getKey(),
-                                usuario.child("nombre").getValue(String.class),
-                                usuario.child("nivel").getValue(Integer.class),
-                                new Random().nextInt(fondosDuelos.length)
-                        ));
-                    }
-
-                }
-                InicioPagerAdapter adapter = new InicioPagerAdapter(getSupportFragmentManager(), contrincantes, duelos);
-                createViewPager(adapter);
-                print("Numero de contrincantes: " + contrincantes.size());
             }
 
             @Override
@@ -169,13 +117,9 @@ public class Inicio extends FragmentActivity {
     public class InicioPagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 2;
         private String tabTitles[] = new String[]{"Contrincantes", "Duelos"};
-        ArrayList<Contrincante> contrincantes;
-        ArrayList<Duelo> duelos;
 
-        InicioPagerAdapter(FragmentManager fm, ArrayList<Contrincante> contrincantes, ArrayList<Duelo> duelos) {
+        InicioPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.contrincantes = contrincantes;
-            this.duelos = duelos;
         }
 
         @Override
@@ -187,9 +131,9 @@ public class Inicio extends FragmentActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return ListaContrincantes.init(contrincantes);
+                    return new ListaContrincantes();
                 case 1:
-                    return ListaDuelos.init(duelos);
+                    return new ListaDuelos();
                 default:
                     return null;
             }

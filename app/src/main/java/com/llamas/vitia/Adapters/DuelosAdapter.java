@@ -3,6 +3,7 @@ package com.llamas.vitia.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,10 @@ import com.llamas.vitia.Model.Duelo;
 import com.llamas.vitia.R;
 
 import java.util.List;
+import java.util.Random;
 
+import static com.llamas.vitia.Constantes.fondosDuelos;
+import static com.llamas.vitia.Constantes.fondosRedondos;
 import static com.llamas.vitia.Constantes.getBaseRef;
 import static com.llamas.vitia.Constantes.getUser;
 
@@ -60,7 +64,12 @@ public class DuelosAdapter extends RecyclerView.Adapter<DuelosAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+        int rand = new Random().nextInt(fondosRedondos.length);
+        holder.imagen.setBackgroundResource(fondosRedondos[rand]);
+        holder.fondoDuelo.setBackgroundResource(fondosDuelos[rand]);
+
         final Duelo d = duelos.get(position);
+        print(d.toString());
 
         if (esTuTurno(d)){
             holder.round.setText("Round " + d.getRound() + " - Es tu turno");
@@ -135,6 +144,12 @@ public class DuelosAdapter extends RecyclerView.Adapter<DuelosAdapter.ViewHolder
 
         return tuTurno;
 
+    }
+
+    // PRINT A CONSOLA
+    public void print(String s) {
+        String TAG = "DUELOS ADAPTER";
+        Log.d(TAG, s);
     }
 
 }

@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.llamas.vitia.CustomClasses.MediumTextView;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import static com.llamas.vitia.Constantes.getBaseRef;
 import static com.llamas.vitia.Constantes.getUser;
@@ -104,92 +105,33 @@ public class IniciarSesion extends Activity {
     // DEFAULTS DE USUARIO EN CASO DE QUE NO EXISTAN
     public void userDefaults(){
 
-        final DatabaseReference userRef = getUserRef();
-
-        // AGREGAR NOMBRE DE USUARIO
-        userRef.child("nombre").addListenerForSingleValueEvent(new ValueEventListener() {
+        getUserRef().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.exists()){
-                    userRef.child("nombre").setValue(getUser().getDisplayName());
+
+                    HashMap<String, Object> defaults = new HashMap<>();
+                    defaults.put("/nombre", getUser().getDisplayName());
+                    defaults.put("/email", getUser().getEmail());
+                    defaults.put("/nivel", 1);
+                    defaults.put("/puntos", 0);
+                    defaults.put("/numeroDeDuelos", 0);
+                    defaults.put("/profileURL", getUser().getPhotoUrl().toString());
+
+                    getUserRef().updateChildren(defaults).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent i = new Intent(IniciarSesion.this, Inicio.class);
+                            startActivity(i);
+                        }
+                    });
+
+                } else {
+
+                    Intent i = new Intent(IniciarSesion.this, Inicio.class);
+                    startActivity(i);
+
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        // AGREGAR EMAIL DE USUARIO
-        userRef.child("email").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    userRef.child("email").setValue(getUser().getEmail());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        // AGREGAR NIVEL DE USUARIO
-        userRef.child("nivel").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    userRef.child("nivel").setValue(1);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        // AGREGAR PUNTOS DE USUARIO
-        userRef.child("puntos").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    userRef.child("puntos").setValue(0);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        // AGREGAR NUMERO DE DUELOS DE USUARIO
-        userRef.child("numeroDeDuelos").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    userRef.child("numeroDeDuelos").setValue(0);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        // AGREGAR NUMERO DE DUELOS DE USUARIO
-        userRef.child("profileURL").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    userRef.child("profileURL").setValue(getUser().getPhotoUrl());
-                }
-                Intent i = new Intent(IniciarSesion.this, Inicio.class);
-                startActivity(i);
             }
 
             @Override

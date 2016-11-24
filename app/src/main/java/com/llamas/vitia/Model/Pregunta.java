@@ -1,10 +1,12 @@
 package com.llamas.vitia.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by MacNPro on 11/22/16.
  */
 
-public class Pregunta {
+public class Pregunta implements Serializable{
 
     String id;
     String p;
@@ -34,11 +36,11 @@ public class Pregunta {
         this.id = id;
     }
 
-    public String getPregunta() {
+    public String getP() {
         return p;
     }
 
-    public void setPregunta(String p) {
+    public void setP(String p) {
         this.p = p;
     }
 
